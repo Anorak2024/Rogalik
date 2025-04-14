@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rogalik", "Rogalik.csproj", "{67AE4CC0-93E8-B531-6946-86D2A392983D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67AE4CC0-93E8-B531-6946-86D2A392983D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AE4CC0-93E8-B531-6946-86D2A392983D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AE4CC0-93E8-B531-6946-86D2A392983D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AE4CC0-93E8-B531-6946-86D2A392983D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC106ACB-2C69-4065-A3B4-B7055FE8F213}
+	EndGlobalSection
+EndGlobal
