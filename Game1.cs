@@ -15,14 +15,10 @@ public class Game1 : Game
     private List<Subsystem> subsystems = [];
     private double subsystems_w = 0;
     public GameTime lastGameTime;
+    public static SpriteFont arial;
 
     public Game1()
     {
-        GLOB.rand = new Random();
-        GLOB.spawn_map = new Map_Normal<Turf_Grass>(10, 10, true);
-        client = new Client(this);
-        client.cur_screen = new Screen_Menu_Main(client);
-
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -33,6 +29,10 @@ public class Game1 : Game
     {
         base.Initialize();
         Subsystem.InitSubsystems(this);
+        GLOB.rand = new Random();
+        GLOB.spawn_map = new Map_Normal(10, 10, true, typeof(Turf_Grass));
+        client = new Client(this);
+        client.setScreen(new Screen_Menu_Main(client));
     }
 
     protected override void LoadContent()
@@ -45,6 +45,13 @@ public class Game1 : Game
             Atom atom = (Atom)Activator.CreateInstance(type);
             atom.LoadContent(Content);
         }
+
+        foreach (string sprite_path in Atom.unused_load) {
+            Texture2D texture = Content.Load<Texture2D>(sprite_path);
+            Atom.all_textures[sprite_path] = texture;
+        }
+
+        arial = Content.Load<SpriteFont>("fonts/Arial");
     }
 
     protected override void Update(GameTime gameTime)

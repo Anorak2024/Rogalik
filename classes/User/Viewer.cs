@@ -7,20 +7,22 @@ using Microsoft.Xna.Framework;
 /// </summary>
 public class Viewer {
     public Client client;
-    public Atom eye;
+    public Mob eye;
     public LazyEye lazyEye;
     /// <summary>
     /// Is atom can be controlled by viewer?
     /// </summary>
     public bool control = true;
+    public bool inv_open = false;
+    public int inv_selected = 0;
 
-    public Viewer(Atom eye, Client client) {
+    public Viewer(Mob eye, Client client) {
         this.eye = eye;
         this.client = client;
         lazyEye = new LazyEye(client.Window);
     }
 
-    private void setEye(Atom newEye) {
+    private void setEye(Mob newEye) {
         if (eye != null)
             eye.UnregisterSignal(Signal.MOVE, lazyEye.applyLazyEye);
         

@@ -8,13 +8,21 @@ public class Subsystem_Input : Subsystem {
     private bool clicking = false;
     public override double max_time_part => 0.1;
     protected override List<Task> defaultProcesses => new(){new(null, CheckInput, [], 10)};
+    protected KeyboardState keyboardState;
 
     public Subsystem_Input(Game1 game1) : base(game1) {
         ScrollWheel = Mouse.GetState().ScrollWheelValue;
+        keyboardState = Keyboard.GetState();
     }
 
     public object CheckInput(Dictionary<string, object> args) {
-        CheckMovement();
+        if (!game.IsActive) {
+            ScrollWheel = Mouse.GetState().ScrollWheelValue;
+            keyboardState = Keyboard.GetState();
+            return null;
+        }
+        
+        CheckKeys();
         MouseWheel();
         CheckClick();
         return null;
@@ -40,7 +48,7 @@ public class Subsystem_Input : Subsystem {
     }
 
 
-    public void CheckMovement() {
+    public void CheckKeys() {
         Atom controlled = game.client.getControlled();
         if (controlled == null)
             return;
@@ -49,11 +57,16 @@ public class Subsystem_Input : Subsystem {
         var pressed = Keyboard.GetState().GetPressedKeys();
         foreach (var key in pressed) {
             if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_RIGHT)) moveX++;
-            else if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_LEFT)) moveX--;
-            else if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_UP)) moveY++;
-            else if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_DOWN)) moveY--;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_LEFT)) moveX--;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_UP)) moveY++;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_DOWN)) moveY--;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_INVENTORY_OPEN) && !keyboardState.IsKeyDown(key)) {
+                Viewer viewer = game.client.getViewer();
+                viewer.inv_open = !viewer.inv_open;
+            }
         }
         
+        keyboardState = Keyboard.GetState();
         if (moveX == 0 && moveY == 0)
             return;
 

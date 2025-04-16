@@ -15,6 +15,15 @@ public class Client {
         Window = game.Window;
     }
 
+    public Viewer getViewer() {
+        if (!(cur_screen is Screen_Map))
+            return null;
+        
+        Screen_Map sv = (Screen_Map) cur_screen;
+        Viewer viewer = sv.viewer;
+        return viewer;
+    }
+
     public Atom getControlled() {
         if (!(cur_screen is Screen_Map))
             return null;
@@ -25,5 +34,11 @@ public class Client {
             return null;
         
         return viewer.eye;
+    }
+
+    public void setScreen(Screen screen) {
+        cur_screen?.onScreenExit();
+        cur_screen = screen;
+        cur_screen.onScreenSet();
     }
 }

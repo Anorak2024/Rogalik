@@ -13,12 +13,12 @@ public class Screen_Map : Screen {
     /// Number of full plates on x and y axis.
     /// </summary>
     const int xrange0 = 16, yrange0 = 9;
+    List<InventorySlot> SeeableInventory = [];
 
     public Screen_Map(Client client) : base(client) {
-        owner = client;
-        Atom eye = new Human();
+        Mob eye = new Human();
         eye.transfer(GLOB.spawn_map.getSpawn());
-        viewer = new Viewer(eye, owner);
+        viewer = new Viewer(eye, client);
         
         viewer.eye.RegisterSignal(Signal.MOVE, viewer.lazyEye.applyLazyEye);
     }
@@ -32,20 +32,27 @@ public class Screen_Map : Screen {
     }
 
     public override void Draw(GameTime gameTime, GameWindow window, SpriteBatch spriteBatch) {
+        base.Draw(gameTime, window, spriteBatch);
         var seeable = getTurfsOnScreen(window);
         Map map = viewer.getMap();
         double mult = GLOB.getPixelMult(window, getXrange(), getYrange());
         foreach (var (tx, ty, x0, y0) in seeable)
             map.getTurf(tx, ty)?.Draw(  gameTime, 
                                         spriteBatch, 
-                                        viewer, 
+                                        client, 
                                         x0 + window.ClientBounds.Width * viewer.lazyEye.lazy_eye_x, 
                                         y0 + window.ClientBounds.Height * viewer.lazyEye.lazy_eye_y,
                                         mult);
+                
+        if (!(viewer.eye is Mob))
+            return;
+
+        foreach (var image in viewer.eye.seeable)
+            image.Draw(gameTime, spriteBatch, client, 0, 0, 0);
     }
 
     public override void Update(GameTime gameTime) {
-
+        
     }
 
     public override Atom getAtomOnPos(GameWindow window, int x, int y) {
@@ -57,7 +64,7 @@ public class Screen_Map : Screen {
         Map map = viewer.getMap();
         double mult = GLOB.getPixelMult(window, getXrange(), getYrange());
         foreach (var (tx, ty, x0, y0) in seeable) {
-            Atom found = map.getTurf(tx, ty)?.getAtomOnPos(x - x0, y - y0, mult);
+            Atom found = map.getTurf(tx, ty)?.getAtomOnPos(x - x0, y - y0, mult, window);
             if (found != null)
                 return found;
         }
@@ -98,5 +105,17 @@ public class Screen_Map : Screen {
             }
 
         return ret;
+    }
+
+    public override void onScreenSet()
+    {
+        base.onScreenSet();
+        images.Add(viewer.eye.inventory);
+    }
+
+    public override void onScreenExit()
+    {
+        base.onScreenExit();
+        images.Remove(viewer.eye.inventory);
     }
 }

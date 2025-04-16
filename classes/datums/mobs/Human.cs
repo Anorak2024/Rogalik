@@ -1,1 +1,3 @@
-public class Human : Mob {}
+public class Human : Mob {
+    
+}

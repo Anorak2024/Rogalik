@@ -6,7 +6,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-public class Map { 
+public class Map {
+    public void generate(Dictionary<string, object> args) {
+        Generator.generate(this, args);
+    }
+
     virtual public Turf getTurf(int x, int y) {
         return null;
     }
@@ -40,22 +44,21 @@ public class Map {
     }
 }
 
-public class Map_Normal<TurfType> : Map where TurfType : Turf {
-    Turf[][] turfs;
-    bool cycled;
+public class Map_Normal : Map {
+    public Turf[][] turfs;
+    public int H, W;
+    public bool cycled;
 
-    public Map_Normal(int h, int w, bool cycled) {        
-        this.cycled = cycled;
-        turfs = new Turf[h][];
-        for (int i = 0; i < h; ++i) {
-            turfs[i] = new Turf[w];
-            for (int j = 0; j < w; ++j) {
-                if (GLOB.rand.NextInt64() % 2 == 0)
-                    turfs[i][j] = (Turf) Activator.CreateInstance(typeof(TurfType), this, new object[]{j, i});
-                else
-                    turfs[i][j] = (Turf) Activator.CreateInstance(typeof(Turf_Error), this, new object[]{j, i});
-            }
-        }
+    public Map_Normal(int h, int w, bool cycled, Type TurfType) { 
+        H = h;
+        W = w;
+        Generator.generate(this, new Dictionary<string, object>{
+            {"type", GLOB.GEN_TYPE_DEBUG},
+            {"h", h},
+            {"w", w},
+            {"cycled", cycled},
+            {"TurfType", TurfType}
+        });
     }
 
     public override Atom getSpawn() {

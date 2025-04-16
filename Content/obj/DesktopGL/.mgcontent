@@ -4,14 +4,20 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>c:/Code/MyGame/Rogalik/Content/fonts/File.spritefont</File>
+    <File>c:/Code/MyGame/Rogalik/Content/fonts/Arial.spritefont</File>
     <File>c:/Code/MyGame/Rogalik/Content/sprites/buttons/Button 1.png</File>
+    <File>c:/Code/MyGame/Rogalik/Content/sprites/items/Stone.png</File>
     <File>c:/Code/MyGame/Rogalik/Content/sprites/mobs/Human.png</File>
     <File>c:/Code/MyGame/Rogalik/Content/sprites/other/Error.png</File>
+    <File>c:/Code/MyGame/Rogalik/Content/sprites/other/Inventory_slot_selected.png</File>
+    <File>c:/Code/MyGame/Rogalik/Content/sprites/other/Inventory_slot.png</File>
     <File>c:/Code/MyGame/Rogalik/Content/sprites/turfs/Grass 1.png</File>
   </SourceFiles>
   <DestFiles>
-    <File>fonts/TimesNewRoman.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

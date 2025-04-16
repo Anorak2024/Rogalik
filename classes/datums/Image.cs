@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 public class Image : Atom {
     /// <summary>
@@ -9,15 +11,26 @@ public class Image : Atom {
     public double center_x, center_y;
     public double h_part, w_part;
     public double w_dev_h;
+    public override float depth => GLOB.DEPTH_IMAGES_L1;
 
     public Image() : base() {}
 
-    public Image(double center_x, double center_y, double h_part, double w_part) : base() {
+    public Image(double center_x, double center_y, double w_part, double h_part) : base() {
         this.center_x = center_x;
         this.center_y = center_y;
         this.h_part = h_part;
         this.w_part = w_part;
-        w_dev_h = getTexture().Width / (double) getTexture().Height;
+        Texture2D texture = getTexture();
+        if (texture == null)
+            return;
+
+        w_dev_h = texture.Width / (double) texture.Height;
+    }
+
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Client client, double x, double y, double mult)
+    {
+        var (x0, y0, w, h) = getPos(client.game.Window);
+        base.Draw(gameTime, spriteBatch, client, x0, y0, getTexture() == null ? 1 : ((double) w / getTexture().Width));
     }
 
     public Tuple<int, int, int, int> getPos(GameWindow window) {
@@ -28,5 +41,25 @@ public class Image : Atom {
         int x0 = (int) (center_x * window.ClientBounds.Width - w / 2);
         int y0 = (int) (center_y * window.ClientBounds.Height - h / 2);
         return new Tuple<int, int, int, int>(x0, y0, w, h);
+    }
+
+    public override Atom getAtomOnPos(int x, int y, double mult, GameWindow window) {
+        var (x0, y0, w, h) = getPos(window);
+        if (x < x0 || y < y0 || x >= x0 + w || y >= y0 + h)
+            return null;
+
+        foreach (var A in content) {
+            Atom found = A.getAtomOnPos(x, y, mult, window);
+            if (found != null)
+                return found;
+        }
+
+        Texture2D texture = getTexture();
+        if (texture != null && GLOB.GetPixel(texture, 
+                (int) (texture.Width / (double) w * ((x - x0) / mult)), 
+                (int) (texture.Height / (double) h * ((y - y0) / mult))).A != 0)
+            return this;
+        else
+            return null;
     }
 }

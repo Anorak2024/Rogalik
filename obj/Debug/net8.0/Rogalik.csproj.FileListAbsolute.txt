@@ -36,4 +36,9 @@ C:\Code\MyGame\Rogalik\bin\Debug\net8.0\sprites\mobs\Human.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\sprites\other\Error.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\sprites\turfs\Grass 1.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\buttons\Button 1.xnb
+C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\fonts\Arial.xnb
+C:\Code\MyGame\Rogalik\obj\Debug\net8.0\Rogalik.sourcelink.json
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\fonts\TimesNewRoman.xnb
+C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\items\Stone.xnb
+C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\other\Inventory_slot.xnb
+C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\other\Inventory_slot_selected.xnb
