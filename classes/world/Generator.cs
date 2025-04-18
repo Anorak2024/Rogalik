@@ -25,7 +25,7 @@ public static class Generator {
 
                 if (GLOB.rand.NextInt64() % 5 == 0) {
                     Item stone = new Item_Stone();
-                    stone.transfer(map.turfs[i][j]);
+                    stone.Transfer(map.turfs[i][j], true);
                 }
             }
         }

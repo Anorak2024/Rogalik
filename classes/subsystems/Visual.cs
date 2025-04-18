@@ -1,4 +1,3 @@
-
 using MyGame2;
 
 /// <summary>

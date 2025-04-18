@@ -71,15 +71,18 @@ public class Subsystem {
     }
 
     public static void InitSubsystems(Game1 game) {
-        input_reader = new Subsystem_Input(game);
-        visual = new Subsystem_Visual(game);
+        input_reader =  new Subsystem_Input(game);
+        visual =        new Subsystem_Visual(game);
+        throws =        new Subsystem_Throws(game);
 
-        game.addSubsystem(input_reader);
-        game.addSubsystem(visual);
+        game.AddSubsystem(input_reader);
+        game.AddSubsystem(visual);
+        game.AddSubsystem(throws);
     }
 
     public static Subsystem_Input input_reader;
     public static Subsystem_Visual visual;
+    public static Subsystem_Throws throws;
 }
 
 public class Task {

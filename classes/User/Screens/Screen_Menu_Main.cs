@@ -23,7 +23,7 @@ public class ButtonTexted : Image {
     public ButtonTexted(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonTexted() : base() {}
     protected virtual string imageText => "";
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Client client, double x, double y, double mult)
     {
@@ -40,63 +40,63 @@ public class ButtonContinue : ButtonTexted {
     public ButtonContinue() : base() {}
     protected override string imageText => "Continue";
     
-    public override void onClick(Client clicker) {}
+    public override void OnClick(Client clicker) {}
 }
 
 public class ButtonNewGame : ButtonTexted {
     public ButtonNewGame(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonNewGame() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "New Game";
     
-    public override void onClick(Client clicker) {
-        clicker.setScreen(new Screen_Map(clicker));
+    public override void OnClick(Client clicker) {
+        clicker.SetScreen(new Screen_Map(clicker));
     }
 }
 
 public class ButtonLoad : ButtonTexted {
     public ButtonLoad(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonLoad() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "Load Game";
     
-    public override void onClick(Client clicker) {}
+    public override void OnClick(Client clicker) {}
 }
 
 public class ButtonOnline : ButtonTexted {
     public ButtonOnline(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonOnline() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "Play Online";
     
-    public override void onClick(Client clicker) {}
+    public override void OnClick(Client clicker) {}
 }
 
 public class ButtonSettings : ButtonTexted {
     public ButtonSettings(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonSettings() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "Settings";
     
-    public override void onClick(Client clicker) {}
+    public override void OnClick(Client clicker) {}
 }
 
 public class ButtonAbout : ButtonTexted {
     public ButtonAbout(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonAbout() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "About";
     
-    public override void onClick(Client clicker) {}
+    public override void OnClick(Client clicker) {}
 }
 
 public class ButtonExit : ButtonTexted {
     public ButtonExit(double center_x, double center_y, double w_part, double h_part) : base(center_x, center_y, w_part, h_part) {}
     public ButtonExit() : base() {}
-    public override string sprite_path => "sprites/buttons/Button 1";
+    public override string Sprite_path => "sprites/buttons/Button 1";
     protected override string imageText => "Exit";
     
-    public override void onClick(Client clicker) {
+    public override void OnClick(Client clicker) {
         clicker.game.Exit();
     }
 }

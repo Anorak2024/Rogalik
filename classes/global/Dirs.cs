@@ -11,6 +11,10 @@ public static partial class GLOB
     public static double DIR_DOWN = Math.PI *       6 / 4;
     public static double DIR_DOWN_RIGHT = Math.PI * 7 / 4;
 
+    public static double get_dir(double x, double y) {
+        return Math.Atan2(y, -x);
+    }
+
     public static double get_dir(int x, int y) {
         return Math.Atan2(y, -x);
     }

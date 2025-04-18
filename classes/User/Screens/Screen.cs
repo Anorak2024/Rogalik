@@ -33,14 +33,14 @@ public class Screen {
         }
     }
 
-    public virtual Atom getAtomOnPos(GameWindow window, int x, int y) {
+    public virtual Atom GetAtomOnPos(GameWindow window, int x, int y) {
         foreach (var image in images) {
             var (x0, y0, w, h) = image.getPos(window);
             double mult = image.getTexture() == null ? 1 : ((double) w / image.getTexture().Width);
             int x1 = x0 + w;
             int y1 = y0 + h;
             if (x0 <= x && y0 <= y && x1 > x && y1 > y)
-                return image.getAtomOnPos(x, y, mult, window);
+                return image.GetAtomOnPos(x, y, mult, window);
         }
 
         return null;

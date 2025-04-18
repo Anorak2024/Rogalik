@@ -9,6 +9,7 @@ public class Preferences {
         {GLOB.PREF_KEY_MOVE_DOWN, Keys.S},
         {GLOB.PREF_MAP_SIZE_MULT, 1.0},
         {GLOB.PREF_INVENTORY_OPEN, Keys.E},
+        {GLOB.PREF_THROW, Keys.R},
     };
 
     public void setPref(string pref, object new_val) {

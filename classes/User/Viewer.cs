@@ -15,23 +15,26 @@ public class Viewer {
     public bool control = true;
     public bool inv_open = false;
     public int inv_selected = 0;
+    public bool throw_mod = false;
 
-    public Viewer(Mob eye, Client client) {
-        this.eye = eye;
+    public Viewer(Client client) {
         this.client = client;
         lazyEye = new LazyEye(client.Window);
     }
 
-    private void setEye(Mob newEye) {
-        if (eye != null)
+    public void setEye(Mob newEye) {
+        if (eye != null) {
             eye.UnregisterSignal(Signal.MOVE, lazyEye.applyLazyEye);
+            eye.viewer = null;
+        }
         
         eye = newEye;
+        eye.viewer = this;
         eye.RegisterSignal(Signal.MOVE, lazyEye.applyLazyEye);
     }
     
     public Map getMap() {
-        return eye?.getTurf().owner;
+        return eye?.GetTurf().map;
     }
 
     /// <summary>

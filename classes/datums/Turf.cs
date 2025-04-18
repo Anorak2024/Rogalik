@@ -3,45 +3,45 @@ public class Turf : Atom {
     public override float depth => GLOB.DEPTH_TURFS;
     public override int default_W => 64;
     public override int default_H => 64;
-    public Map owner;
+    public Map map;
     public object[] cords;
 
     public Turf() : base() {}
 
-    public Turf(Map owner, object[] cords) : base() {
-        this.owner = owner;
+    public Turf(Map map, object[] cords) : base() {
+        this.map = map;
         this.cords = cords;
     }
 
     public Turf Up() {
-        return owner.Up(this);
+        return map.Up(this);
     }
 
     public Turf Down() {
-        return owner.Down(this);
+        return map.Down(this);
     }
 
     public Turf Left() {
-        return owner.Left(this);
+        return map.Left(this);
     }
 
     public Turf Right() {
-        return owner.Right(this);
+        return map.Right(this);
     }
 }
 
 public class Turf_Grass : Turf {
-    public override string sprite_path => "sprites/turfs/Grass 1";
+    public override string Sprite_path => "sprites/turfs/Grass 1";
 
     public Turf_Grass() : base() {}
 
-    public Turf_Grass(Map owner, object[] cords) : base(owner, cords) {}
+    public Turf_Grass(Map map, object[] cords) : base(map, cords) {}
 }
 
 public class Turf_Error : Turf {
-    public override string sprite_path => "sprites/other/Error";
+    public override string Sprite_path => "sprites/other/Error";
 
     public Turf_Error() : base() {}
 
-    public Turf_Error(Map owner, object[] cords) : base(owner, cords) {}
+    public Turf_Error(Map map, object[] cords) : base(map, cords) {}
 }

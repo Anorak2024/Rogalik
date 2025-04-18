@@ -12,7 +12,7 @@ public class Atom : Datum {
         "sprites/other/Inventory_slot_selected",
     };
     public static Dictionary<string, Texture2D> all_textures = [];
-    public virtual string sprite_path => "sprites/other/Error";
+    public virtual string Sprite_path => "sprites/other/Error";
     public string overrided_sprite_path = null;
     public List<Atom> content = []; // Atom, posx, posy
     protected virtual bool ShowContent => true;
@@ -25,8 +25,8 @@ public class Atom : Datum {
     public double x = 0;
     public double y = 0;
 
-    public virtual Func<Atom, double, double, object> move {get; set;} = (mover, dir, len) => {
-        makeStep(mover, dir, len);
+    public virtual Func<Atom, double, double, object> Move {get; set;} = (mover, dir, len) => {
+        MakeStep(mover, dir, len);
         return null;
     };
 
@@ -45,11 +45,11 @@ public class Atom : Datum {
     }
 
     public void LoadContent(ContentManager content) {
-        if (sprite_path == Atom.noTexture)
+        if (Sprite_path == Atom.noTexture)
             return;
 
-        Texture2D texture = content.Load<Texture2D>(sprite_path);
-        all_textures[sprite_path] = texture;
+        Texture2D texture = content.Load<Texture2D>(Sprite_path);
+        all_textures[Sprite_path] = texture;
     }
 
     public Texture2D getTexture() {
@@ -59,16 +59,16 @@ public class Atom : Datum {
             return texture;
         }
 
-        if (sprite_path == noTexture)
+        if (Sprite_path == noTexture)
             return null;
         
-        all_textures.TryGetValue(sprite_path, out texture);
+        all_textures.TryGetValue(Sprite_path, out texture);
         return texture;
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, Client client, double x, double y, double mult) {
-        x -= this.x * mult;
-        y -= this.y * mult;
+        x += this.x * mult;
+        y += this.y * mult;
         Viewer viewer = client.getViewer();
 
         if (getTexture() != null && (viewer == null || viewer.canSee(this)))
@@ -86,32 +86,49 @@ public class Atom : Datum {
             A.Draw(gameTime, spriteBatch, client, x, y, mult);
     }
 
-    public Turf getTurf() {
-        return this is Turf ? (Turf)this : loc?.getTurf();
+    public Turf GetTurf() {
+        return this is Turf turf ? turf : loc?.GetTurf();
     }
 
-    public void transfer(Atom target) {
+    public Map GetMap() {
+        Turf T = GetTurf();
+        return T?.map;
+    }
+
+    public Atom GetPreTurf() {
+        if (this is Turf)
+            return null;
+        
+        return loc is Turf ? this : loc?.GetPreTurf();
+    }
+
+    public void Transfer(Atom target, bool random_pos = false) {
         loc?.content.Remove(this);
         loc = target;
-        loc?.content.Add(this);
+        loc.content.Add(this);
+        if (loc != null && random_pos) {
+            x = (int) (GLOB.rand.NextInt64() % loc.W);
+            y = (int) (GLOB.rand.NextInt64() % loc.H);
+        }
     }
 
-    public static void makeStep(Atom mover, double dir, double len) {
-        if (!(mover.loc is Turf))
+    public static void MakeStep(Atom mover, double dir, double len) {
+        if (mover.loc is not Turf)
             return;
         
+        len *= Turf.side_len;
         double x = len * Math.Cos(dir);
         double y = len * Math.Sin(dir);
         mover.SendSignal(Signal.MOVE, mover, new Dictionary<string, object>{{"dx", x}, {"dy", y}});
-        mover.x += x;
-        mover.y += y;
+        mover.x -= x;
+        mover.y -= y;
 
         Turf loc = (Turf) mover.loc;
         while (mover.x >= loc.W) {
             Turf R = loc.Right();
             if (R != null) {
                 mover.x -= loc.W;
-                mover.transfer(R);
+                mover.Transfer(R);
                 loc = (Turf) mover.loc;
                 continue;
             } else mover.x = loc.W - 1;
@@ -120,7 +137,7 @@ public class Atom : Datum {
         while (mover.x < 0) {
             Turf L = loc.Left();
             if (L != null) {
-                mover.transfer(L);
+                mover.Transfer(L);
                 loc = (Turf) mover.loc;
                 mover.x += loc.W;
                 continue;
@@ -131,7 +148,7 @@ public class Atom : Datum {
             Turf U = loc.Up();
             if (U != null) {
                 mover.y -= loc.H;
-                mover.transfer(U);
+                mover.Transfer(U);
                 loc = (Turf) mover.loc;
                 continue;
             } else mover.y = loc.H - 1;
@@ -140,7 +157,7 @@ public class Atom : Datum {
         while (mover.y < 0) {
             Turf D = loc.Down();
             if (D != null) {
-                mover.transfer(D);
+                mover.Transfer(D);
                 loc = (Turf) mover.loc;
                 mover.y += loc.H;
                 continue;
@@ -148,19 +165,23 @@ public class Atom : Datum {
         }
     }
 
-    public virtual int getSpeed() {
+    public virtual double GetSpeed() {
         return 0;
     }
 
-    public virtual Atom getAtomOnPos(int x, int y, double mult, GameWindow window) {
-        if (x < 0 || y < 0 || x >= W * mult || y >= H * mult)
+    public virtual Atom GetAtomOnPos(int x, int y, double mult, GameWindow window) {
+        // For a situation in which the atom is almost entirely in the wrong tile.
+        if (x < - Turf.side_len * mult || y < - Turf.side_len * mult || x >= Turf.side_len * mult * 2 || y >= Turf.side_len * mult * 2)
             return null;
 
         foreach (var A in content) {
-            Atom found = A.getAtomOnPos((int) (x - A.x * mult), (int) (y - A.y * mult), mult, window);
+            Atom found = A.GetAtomOnPos((int) (x - A.x * mult), (int) (y - A.y * mult), mult, window);
             if (found != null)
                 return found;
         }
+
+        if (x < 0 || y < 0 || x >= W * mult || y >= H * mult)
+            return null;
 
         if (GLOB.GetPixel(getTexture(), 
                 (int) (getTexture().Width / (double) W * (x / mult)), 
@@ -170,24 +191,7 @@ public class Atom : Datum {
             return null;
     }
 
-    public virtual void onClick(Client clicker) {}
+    public virtual void OnClick(Client clicker) {}
 
-    public virtual void onUnclick(Client clicker) {}
-
-    public bool near(Atom a) {
-        Turf t1 = getTurf();
-        Turf t2 = a.getTurf();
-        Map_Normal map = (Map_Normal)t1.owner;
-        if (t1.owner != t2.owner)
-            return false;
-        
-        int x1 = (int) t1.cords[0];
-        int x2 = (int) t2.cords[0];
-        int y1 = (int) t1.cords[1];
-        int y2 = (int) t2.cords[1];
-        int dx = Math.Abs(x1 - x2);
-        int dy = Math.Abs(y1 - y2);
-        return  Math.Min(dx, map.W - dx) + 
-                Math.Min(dy, map.H - dy) < 3;
-    }
+    public virtual void OnUnclick(Client clicker) {}
 }

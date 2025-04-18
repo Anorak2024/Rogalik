@@ -9,7 +9,7 @@ public class Inventory : Image {
     public InventorySlot[] slots;
     const int noSlots = -1;
     public InventorySlot selected = null;
-    public override string sprite_path => Atom.noTexture;
+    public override string Sprite_path => Atom.noTexture;
 
     public Inventory() {}
 
@@ -23,7 +23,7 @@ public class Inventory : Image {
         for (int i = 0; i * 10 < size; ++i)
             for (int j = 0; j < Math.Min(size - i * 10, 10); ++j) {
                 slots[i * 10 + j] = new InventorySlot(left_x + slot_wpart * (j + 0.5), top_y + slot_hpart * (i + 0.5), slot_wpart, slot_hpart, i * 10 + j);
-                slots[i * 10 + j].transfer(this);
+                slots[i * 10 + j].Transfer(this);
             }
     }
 
@@ -39,19 +39,19 @@ public class Inventory : Image {
         return noSlots;
     }
 
-    public bool tryPut(Item I) {
+    public bool TryPut(Item I) {
         int slot = getFirstGoodSlot(I);
         if (slot == noSlots)
             return false;
 
-        slots[slot].content = [I];
+        slots[slot].content.Add(I);
         slots[slot].count++;
         return true;
     }
 }
 
 public class InventorySlot : Image {
-    public override string sprite_path => "sprites/other/Inventory_slot";
+    public override string Sprite_path => "sprites/other/Inventory_slot";
     public int count = 0;
     public int ind;
     protected override bool ShowContent => false;
@@ -60,12 +60,19 @@ public class InventorySlot : Image {
         return content.Count > 0 ? (Item) content[0] : null;
     }
 
-    public override void onClick(Client clicker)
+    public override void OnClick(Client clicker)
     {
-        Inventory inventory = clicker.getViewer().eye.inventory;
+        Viewer viewer = clicker.getViewer();
+        Inventory inventory = viewer.eye.inventory;
         if (inventory.selected != null)
             inventory.selected.overrided_sprite_path = null;
-            
+        
+        if (inventory.selected == this) {
+            inventory.selected.overrided_sprite_path = null;
+            inventory.selected = null;
+            return;
+        }
+
         inventory.selected = this;
         inventory.selected.overrided_sprite_path = "sprites/other/Inventory_slot_selected";
     }
@@ -99,6 +106,16 @@ public class InventorySlot : Image {
                 (int) (y0 + h * 0.95 - Game1.arial.MeasureString(imageText).Y)), 
                 Color.White, 0, new Vector2(0, 0), (float) mult, SpriteEffects.None, GLOB.DEPTH_IMAGES_L3);
         }
+    }
+
+    public Item TakeOne() {
+        Item I = getItem();
+        if (I == null)
+            return null;
+
+        count--;
+        content.Remove(I);
+        return I;
     }
 }
 

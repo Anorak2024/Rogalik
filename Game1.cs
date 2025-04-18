@@ -29,10 +29,9 @@ public class Game1 : Game
     {
         base.Initialize();
         Subsystem.InitSubsystems(this);
-        GLOB.rand = new Random();
         GLOB.spawn_map = new Map_Normal(10, 10, true, typeof(Turf_Grass));
         client = new Client(this);
-        client.setScreen(new Screen_Menu_Main(client));
+        client.SetScreen(new Screen_Menu_Main(client));
     }
 
     protected override void LoadContent()
@@ -71,7 +70,7 @@ public class Game1 : Game
         _spriteBatch.End();
     }
 
-    public void addSubsystem(Subsystem subsystem) {
+    public void AddSubsystem(Subsystem subsystem) {
         subsystems.Add(subsystem);
         subsystems_w += subsystem.max_time_part;
     }

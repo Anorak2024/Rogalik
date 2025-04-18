@@ -43,16 +43,17 @@ public class Image : Atom {
         return new Tuple<int, int, int, int>(x0, y0, w, h);
     }
 
-    public override Atom getAtomOnPos(int x, int y, double mult, GameWindow window) {
+    public override Atom GetAtomOnPos(int x, int y, double mult, GameWindow window) {
         var (x0, y0, w, h) = getPos(window);
         if (x < x0 || y < y0 || x >= x0 + w || y >= y0 + h)
             return null;
 
-        foreach (var A in content) {
-            Atom found = A.getAtomOnPos(x, y, mult, window);
-            if (found != null)
-                return found;
-        }
+        if (ShowContent) // We can click on something only if we see it.
+            foreach (var A in content) {
+                Atom found = A.GetAtomOnPos(x, y, mult, window);
+                if (found != null)
+                    return found;
+            }
 
         Texture2D texture = getTexture();
         if (texture != null && GLOB.GetPixel(texture, 

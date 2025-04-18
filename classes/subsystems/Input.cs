@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework.Input;
 using MyGame2;
 
@@ -28,6 +29,30 @@ public class Subsystem_Input : Subsystem {
         return null;
     }
 
+    public void MouseWheel() {
+        int newScrollWheel = Mouse.GetState().ScrollWheelValue;
+        int dlt = newScrollWheel - ScrollWheel;
+        if (dlt == 0)
+            return;
+
+        ScrollWheel = newScrollWheel;
+        double old_val = (double) game.client.preferences.getPref(GLOB.PREF_MAP_SIZE_MULT);
+        game.client.preferences.setPref(GLOB.PREF_MAP_SIZE_MULT, Math.Clamp(old_val - dlt / 2000.0, 0.1, 3));
+    }
+
+    private void Throw(MouseState state) {
+        double mult = GLOB.getPixelMult(game.Window, ((Screen_Map)game.client.cur_screen).getXrange(), ((Screen_Map)game.client.cur_screen).getYrange());
+        Mob thrower = game.client.getViewer().eye;
+        Item I = thrower?.GetSelectedSlot()?.TakeOne();
+        if (I == null)
+            return;
+        
+        thrower.Throw(I, 
+            (state.X - game.Window.ClientBounds.Width / 2) / mult / Turf.side_len, 
+            (state.Y - game.Window.ClientBounds.Height / 2) / mult / Turf.side_len
+        );
+    }
+
     private void CheckClick()
     {
         var state = Mouse.GetState();
@@ -35,14 +60,23 @@ public class Subsystem_Input : Subsystem {
         if (clicking == clicking_now)
             return;
 
-        Atom A = game.client.cur_screen.getAtomOnPos(game.Window, state.X, state.Y);
-        if (A == null)
+        Viewer viewer = game.client.getViewer();
+        if (viewer != null && viewer.throw_mod != false && !clicking && clicking_now) {
+            Throw(state);
+            clicking = clicking_now;
             return;
+        }
 
+        Atom A = game.client.cur_screen.GetAtomOnPos(game.Window, state.X, state.Y);
+        if (A == null) {
+            clicking = clicking_now;
+            return;    
+        }
+        
         if (!clicking && clicking_now)
-            A.onClick(game.client);
+            A.OnClick(game.client);
         else
-            A.onUnclick(game.client);
+            A.OnUnclick(game.client);
 
         clicking = clicking_now;
     }
@@ -55,32 +89,26 @@ public class Subsystem_Input : Subsystem {
 
         int moveX = 0, moveY = 0;
         var pressed = Keyboard.GetState().GetPressedKeys();
+        Viewer viewer = game.client.getViewer();
         foreach (var key in pressed) {
-            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_RIGHT)) moveX++;
-            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_LEFT)) moveX--;
-            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_UP)) moveY++;
-            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_DOWN)) moveY--;
-            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_INVENTORY_OPEN) && !keyboardState.IsKeyDown(key)) {
-                Viewer viewer = game.client.getViewer();
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_RIGHT)) 
+                moveX++;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_LEFT)) 
+                moveX--;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_UP)) 
+                moveY++;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_DOWN)) 
+                moveY--;
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_INVENTORY_OPEN) && !keyboardState.IsKeyDown(key))
                 viewer.inv_open = !viewer.inv_open;
-            }
+            if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_THROW) && !keyboardState.IsKeyDown(key))
+                viewer.throw_mod = !viewer.throw_mod;
         }
         
         keyboardState = Keyboard.GetState();
         if (moveX == 0 && moveY == 0)
             return;
 
-        controlled.move(controlled, GLOB.get_dir(moveX, moveY), controlled.getSpeed() * game.lastGameTime.ElapsedGameTime.TotalSeconds);
-    }
-
-    public void MouseWheel() {
-        int newScrollWheel = Mouse.GetState().ScrollWheelValue;
-        int dlt = newScrollWheel - ScrollWheel;
-        if (dlt == 0)
-            return;
-
-        ScrollWheel = newScrollWheel;
-        double old_val = (double) game.client.preferences.getPref(GLOB.PREF_MAP_SIZE_MULT);
-        game.client.preferences.setPref(GLOB.PREF_MAP_SIZE_MULT, Math.Clamp(old_val - dlt / 2000.0, 0.1, 3));
+        controlled.Move(controlled, GLOB.get_dir(moveX, moveY), controlled.GetSpeed() * game.lastGameTime.ElapsedGameTime.TotalSeconds);
     }
 }
