@@ -45,6 +45,6 @@ public class Mob : Atom {
             return null;
         };
 
-        Subsystem.throws.AddProcess(ProcessThrow, new Dictionary<string, object>(){{"throwing", throwing}}, 5, throwing.id);
+        Subsystem.throws.AddProcess(ProcessThrow, new Dictionary<string, object>(){{"throwing", throwing}}, 10, throwing.id);
     }
 }

@@ -35,6 +35,6 @@ public class Client {
 
     public void SetUpViewer(Mob eye) {
         viewer = new Viewer(this);
-        viewer.setEye(eye);
+        viewer.SetEye(eye);
     }
 }

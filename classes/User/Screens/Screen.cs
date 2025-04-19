@@ -10,7 +10,7 @@ public class Screen {
     /// List of atoms that we can see on screen. (For example buttons.)
     /// (Exept of ingame elements like turfs.)
     /// </summary>
-    protected List<Image> images = [];
+    public List<Image> images = [];
 
     public Screen(Client client) {
         this.client = client;
@@ -27,7 +27,7 @@ public class Screen {
     public virtual void Update(GameTime gameTime) {}
 
     public virtual void Draw(GameTime gameTime, GameWindow window, SpriteBatch spriteBatch) {
-        foreach (var image in images) {
+        foreach (var image in client.cur_screen.images) {
             var (x0, y0, w, h) = image.getPos(window);
             image.Draw(gameTime, spriteBatch, client, x0, y0, image.getTexture() == null ? 1 : ((double) w / image.getTexture().Width));
         }

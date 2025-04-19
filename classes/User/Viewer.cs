@@ -15,14 +15,28 @@ public class Viewer {
     public bool control = true;
     public bool inv_open = false;
     public int inv_selected = 0;
-    public bool throw_mod = false;
+    protected bool throw_mod = false;
+    public List<Image> seeable = [];
+    protected static ThrowImage throwImage = new(0.41, 0.02, 0.03, 0.03);
 
     public Viewer(Client client) {
         this.client = client;
         lazyEye = new LazyEye(client.Window);
     }
 
-    public void setEye(Mob newEye) {
+    public void SwitchThrow() {
+        throw_mod = !throw_mod;
+        if (throw_mod)
+            seeable.Add(throwImage);
+        else
+            seeable.Remove(throwImage);
+    }
+
+    public bool GetThrowMod() {
+        return throw_mod;
+    }
+
+    public void SetEye(Mob newEye) {
         if (eye != null) {
             eye.UnregisterSignal(Signal.MOVE, lazyEye.applyLazyEye);
             eye.viewer = null;
@@ -33,7 +47,7 @@ public class Viewer {
         eye.RegisterSignal(Signal.MOVE, lazyEye.applyLazyEye);
     }
     
-    public Map getMap() {
+    public Map GetMap() {
         return eye?.GetTurf().map;
     }
 

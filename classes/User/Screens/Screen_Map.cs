@@ -30,7 +30,7 @@ public class Screen_Map : Screen {
     public override void Draw(GameTime gameTime, GameWindow window, SpriteBatch spriteBatch) {
         base.Draw(gameTime, window, spriteBatch);
         var seeable = getTurfsOnScreen(window);
-        Map map = client.viewer.getMap();
+        Map map = client.viewer.GetMap();
         double mult = GLOB.getPixelMult(window, getXrange(), getYrange());
         foreach (var (tx, ty, x0, y0) in seeable)
             map.getTurf(tx, ty)?.Draw(  gameTime, 
@@ -40,8 +40,15 @@ public class Screen_Map : Screen {
                                         y0 + window.ClientBounds.Height * client.viewer.lazyEye.lazy_eye_y,
                                         mult);
 
-        foreach (var image in client.viewer.eye.seeable)
-            image.Draw(gameTime, spriteBatch, client, 0, 0, 0);
+        foreach (var image in client.viewer.seeable) {
+            var (x0, y0, w, h) = image.getPos(window);
+            image.Draw(gameTime, spriteBatch, client, x0, y0, image.getTexture() == null ? 1 : ((double) w / image.getTexture().Width));
+        }
+
+        foreach (var image in client.viewer.eye.seeable) {
+            var (x0, y0, w, h) = image.getPos(window);
+            image.Draw(gameTime, spriteBatch, client, x0, y0, image.getTexture() == null ? 1 : ((double) w / image.getTexture().Width));
+        }
     }
 
     public override void Update(GameTime gameTime) {
@@ -54,7 +61,7 @@ public class Screen_Map : Screen {
             return image;
         
         var seeable = getTurfsOnScreen(window);
-        Map map = client.viewer.getMap();
+        Map map = client.viewer.GetMap();
         double mult = GLOB.getPixelMult(window, getXrange(), getYrange());
         foreach (var (tx, ty, x0, y0) in seeable) {
             Atom found = map.getTurf(tx, ty)?.GetAtomOnPos(x - x0, y - y0, mult, window);
@@ -101,7 +108,7 @@ public class Screen_Map : Screen {
     public override void onScreenSet()
     {
         base.onScreenSet();
-        images.Add(client.viewer.eye.inventory);
+        images.Add(client.viewer.eye.inventory); // Потом, когда будет не лень, надо прикрутить это к мобу.
     }
 
     public override void onScreenExit()

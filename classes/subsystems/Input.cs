@@ -46,7 +46,10 @@ public class Subsystem_Input : Subsystem {
         Item I = thrower?.GetSelectedSlot()?.TakeOne();
         if (I == null)
             return;
-        
+
+        if (thrower?.GetSelectedSlot().count == 0)
+            game.client.viewer.SwitchThrow();
+
         thrower.Throw(I, 
             (state.X - game.Window.ClientBounds.Width / 2) / mult / Turf.side_len, 
             (state.Y - game.Window.ClientBounds.Height / 2) / mult / Turf.side_len
@@ -61,7 +64,7 @@ public class Subsystem_Input : Subsystem {
             return;
 
         Viewer viewer = game.client.getViewer();
-        if (viewer != null && viewer.throw_mod != false && !clicking && clicking_now) {
+        if (viewer != null && viewer.GetThrowMod() != false && !clicking && clicking_now) {
             Throw(state);
             clicking = clicking_now;
             return;
@@ -102,7 +105,7 @@ public class Subsystem_Input : Subsystem {
             if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_INVENTORY_OPEN) && !keyboardState.IsKeyDown(key))
                 viewer.inv_open = !viewer.inv_open;
             if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_THROW) && !keyboardState.IsKeyDown(key))
-                viewer.throw_mod = !viewer.throw_mod;
+                viewer.SwitchThrow();
         }
         
         keyboardState = Keyboard.GetState();

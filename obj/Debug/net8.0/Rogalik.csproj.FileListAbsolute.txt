@@ -42,3 +42,4 @@ C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\fonts\TimesNewRoman.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\items\Stone.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\other\Inventory_slot.xnb
 C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\other\Inventory_slot_selected.xnb
+C:\Code\MyGame\Rogalik\bin\Debug\net8.0\Content\sprites\buttons\Throw.xnb

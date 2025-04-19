@@ -6,6 +6,7 @@
   <SourceFiles>
     <File>C:/Code/MyGame/Rogalik/Content/fonts/Arial.spritefont</File>
     <File>C:/Code/MyGame/Rogalik/Content/sprites/buttons/Button 1.png</File>
+    <File>C:/Code/MyGame/Rogalik/Content/sprites/buttons/Throw.png</File>
     <File>C:/Code/MyGame/Rogalik/Content/sprites/items/Stone.png</File>
     <File>C:/Code/MyGame/Rogalik/Content/sprites/mobs/Human.png</File>
     <File>C:/Code/MyGame/Rogalik/Content/sprites/other/Error.png</File>
@@ -14,6 +15,7 @@
     <File>C:/Code/MyGame/Rogalik/Content/sprites/turfs/Grass 1.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
