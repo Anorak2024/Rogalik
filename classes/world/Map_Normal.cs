@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Map_Normal : Map {
-    public Turf[][] turfs;
-    public int H, W;
-    public bool cycled;
+    public Turf[][] turfs {get; set;} = null;
+    public int H {get; set;} = 0;
+    public int W {get; set;} = 0;
+    public bool cycled {get; set;} = true;
 
     public Map_Normal(int h, int w, bool cycled, Type TurfType) { 
         H = h;
@@ -19,7 +20,7 @@ public class Map_Normal : Map {
         });
     }
 
-    public override Atom getSpawn() {
+    public override Atom GetSpawn() {
         return turfs[getH() / 2][getW() / 2];
     }
 
@@ -142,5 +143,11 @@ public class Map_Normal : Map {
                 D = Math.Min(D, Dist(angles1[i], angles2[j]));
 
         return D;
+    }
+
+    public override string Encode() {
+        string ret = "";
+        ret += W + ";" + H + ";" + cycled + ";";
+        return ret;
     }
 }

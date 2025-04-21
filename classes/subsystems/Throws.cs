@@ -17,7 +17,7 @@ public class Throwing {
     /// </summary>
     public double xspeed, yspeed, just_speed;
     public double dist;
-    public ID id;
+    public long id;
 
     public Throwing(Atom thrown, double dx, double dy, double max_dist, double strength) {
         this.thrown = thrown;

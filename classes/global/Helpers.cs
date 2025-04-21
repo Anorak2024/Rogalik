@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 public static partial class GLOB
 {
     public static Random rand = new();
-    public static Map spawn_map;
+    public static World GameWorld;
 
     public static double getPixelMult(GameWindow window, double xrange, double yrange) {
         return Math.Max(window.ClientBounds.Width / xrange / Turf.side_len, window.ClientBounds.Height / yrange / Turf.side_len);

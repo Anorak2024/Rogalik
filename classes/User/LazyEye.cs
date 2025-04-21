@@ -2,18 +2,15 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-public class LazyEye {
+public class LazyEye(GameWindow window)
+{
     public double lazy_eye_x = 0, lazy_eye_y = 0;
     bool relaxing = false;
-    GameWindow window;
-    ID relaxing_id;
+    readonly GameWindow window = window;
+    long relaxing_id;
     long last_move;
 
-    public LazyEye(GameWindow window) {
-        this.window = window;
-    }
-
-    public object relax(Dictionary<string, object> args) {
+    public object Relax(Dictionary<string, object> args) {
         if (GLOB.getMilliseconds() - last_move < 100)
             return null;
         
@@ -40,7 +37,7 @@ public class LazyEye {
         lazy_eye_y = Math.Clamp((lazy_eye_y * (h - 1) + ddy) / h, -0.01, 0.01);
         if (!relaxing) {
             relaxing = true;
-            relaxing_id = Subsystem.visual.AddProcess(relax, [], 30);
+            relaxing_id = Subsystem.visual.AddProcess(Relax, [], 30);
         }
         
         return null;

@@ -11,19 +11,19 @@ public class Atom : Datum {
     public static string[] unused_load = {
         "sprites/other/Inventory_slot_selected",
     };
-    public static Dictionary<string, Texture2D> all_textures = [];
+    public static Dictionary<string, Texture2D> all_textures {get; set;} = [];
     public virtual string Sprite_path => "sprites/other/Error";
-    public string overrided_sprite_path = null;
-    public List<Atom> content = []; // Atom, posx, posy
+    public string overrided_sprite_path {get; set;} = null;
+    public List<Atom> content {get; set;} = []; // Atom, posx, posy
     protected virtual bool ShowContent => true;
-    protected Atom loc = null;
-    public int H = 32;
-    public int W = 32;
+    protected Atom loc {get; set;} = null;
+    public int H {get; set;} = 32;
+    public int W {get; set;} = 32;
     public virtual int default_W => -1;
     public virtual int default_H => -1;
     public virtual float depth => 0;
-    public double x = 0;
-    public double y = 0;
+    public double x {get; set;} = 0;
+    public double y {get; set;} = 0;
 
     public virtual Func<Atom, double, double, object> Move {get; set;} = (mover, dir, len) => {
         MakeStep(mover, dir, len);

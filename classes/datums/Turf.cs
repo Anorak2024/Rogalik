@@ -3,8 +3,8 @@ public class Turf : Atom {
     public override float depth => GLOB.DEPTH_TURFS;
     public override int default_W => 64;
     public override int default_H => 64;
-    public Map map;
-    public object[] cords;
+    public Map map {get; set;} = null;
+    public object[] cords {get; set;} = null;
 
     public Turf() : base() {}
 

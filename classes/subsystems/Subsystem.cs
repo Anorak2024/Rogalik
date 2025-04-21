@@ -16,7 +16,7 @@ public class Subsystem {
     /// Tasks for this subsystem.
     /// </summary>
     PriorityQueue<Task, long> tasks = new PriorityQueue<Task, long>();
-    HashSet<ID> should_del = [];
+    HashSet<long> should_del = [];
 
     public Subsystem(Game1 game1) {
         game = game1;
@@ -24,31 +24,31 @@ public class Subsystem {
             AddProcess(t);
     }
     
-    public ID AddTask(Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long after, ID id = null) {
-        if (id == null)
+    public long AddTask(Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long after, long id = IDGiver.NoID) {
+        if (id == IDGiver.NoID)
             id = IDGiver.get();
         
         tasks.Enqueue(new Task(id, func, args, Task.no_recall), GLOB.getMilliseconds() + after);
         return id;
     }
 
-    public ID AddProcess(Task task) {
+    public long AddProcess(Task task) {
         return AddProcess(task.func, task.args, task.recall, task.id);
     }
 
-    public ID AddProcess(Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long period, ID id = null) {
-        if (id == null)
+    public long AddProcess(Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long period, long id = IDGiver.NoID) {
+        if (id == IDGiver.NoID)
             id = IDGiver.get();
 
         tasks.Enqueue(new Task(id, func, args, period), GLOB.getMilliseconds() + period);
         return id;
     }
 
-    public void RemoveTask(ID id) {
+    public void RemoveTask(long id) {
         should_del.Add(id);
     }
 
-    public void RemoveProcess(ID id) {
+    public void RemoveProcess(long id) {
         RemoveTask(id);
     }
 
@@ -66,7 +66,7 @@ public class Subsystem {
             
             task.func(task.args);
             if (task.recall != Task.no_recall)
-                AddProcess(task.func, task.args, task.recall, task.id); // Same ID
+                AddProcess(task.func, task.args, task.recall, task.id); // Same long
         }
     }
 
@@ -86,7 +86,7 @@ public class Subsystem {
 }
 
 public class Task {
-    public ID id;
+    public long id;
     public Func<Dictionary<string, object>, object> func;
     public Dictionary<string, object> args;
     // Time befor recall. If no recall, -1.
@@ -94,8 +94,8 @@ public class Task {
 
     public const long no_recall = -1;
 
-    public Task(ID id, Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long recall) {
-        if (id == null)
+    public Task(long id, Func<Dictionary<string, object>, object> func, Dictionary<string, object> args, long recall) {
+        if (id == IDGiver.NoID)
             id = IDGiver.get();
 
         this.id = id;

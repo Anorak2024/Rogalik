@@ -15,7 +15,7 @@ public class Screen_Map : Screen {
 
     public Screen_Map(Client client) : base(client) {
         Mob eye = new Human(); // Will be changed.
-        eye.Transfer(GLOB.spawn_map.getSpawn(), true);
+        eye.Transfer(GLOB.GameWorld.GetSpawn(), true);
         client.SetUpViewer(eye);
     }
 

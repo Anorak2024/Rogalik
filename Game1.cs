@@ -29,7 +29,6 @@ public class Game1 : Game
     {
         base.Initialize();
         Subsystem.InitSubsystems(this);
-        GLOB.spawn_map = new Map_Normal(10, 10, true, typeof(Turf_Grass));
         client = new Client(this);
         client.SetScreen(new Screen_Menu_Main(client));
     }

@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework.Input;
 using MyGame2;
 
 public class Subsystem_Input : Subsystem {
-    private int ScrollWheel;
-    private bool clicking = false;
+    protected int ScrollWheel;
+    protected bool clicking = false;
     public override double max_time_part => 0.1;
-    protected override List<Task> defaultProcesses => new(){new(null, CheckInput, [], 10)};
+    protected override List<Task> defaultProcesses => [new(IDGiver.NoID, CheckInput, [], 10)];
     protected KeyboardState keyboardState;
 
     public Subsystem_Input(Game1 game1) : base(game1) {
@@ -29,7 +30,7 @@ public class Subsystem_Input : Subsystem {
         return null;
     }
 
-    public void MouseWheel() {
+    protected void MouseWheel() {
         int newScrollWheel = Mouse.GetState().ScrollWheelValue;
         int dlt = newScrollWheel - ScrollWheel;
         if (dlt == 0)
@@ -40,7 +41,7 @@ public class Subsystem_Input : Subsystem {
         game.client.preferences.setPref(GLOB.PREF_MAP_SIZE_MULT, Math.Clamp(old_val - dlt / 2000.0, 0.1, 3));
     }
 
-    private void Throw(MouseState state) {
+    protected void Throw(MouseState state) {
         double mult = GLOB.getPixelMult(game.Window, ((Screen_Map)game.client.cur_screen).getXrange(), ((Screen_Map)game.client.cur_screen).getYrange());
         Mob thrower = game.client.getViewer().eye;
         Item I = thrower?.GetSelectedSlot()?.TakeOne();
@@ -56,7 +57,7 @@ public class Subsystem_Input : Subsystem {
         );
     }
 
-    private void CheckClick()
+    protected void CheckClick()
     {
         var state = Mouse.GetState();
         bool clicking_now = state.LeftButton == ButtonState.Pressed;
@@ -85,7 +86,7 @@ public class Subsystem_Input : Subsystem {
     }
 
 
-    public void CheckKeys() {
+    protected void CheckKeys() {
         Atom controlled = game.client.getControlled();
         if (controlled == null)
             return;
@@ -93,6 +94,11 @@ public class Subsystem_Input : Subsystem {
         int moveX = 0, moveY = 0;
         var pressed = Keyboard.GetState().GetPressedKeys();
         Viewer viewer = game.client.getViewer();
+        if (pressed.Contains(Keys.LeftControl) || pressed.Contains(Keys.RightControl)) {
+            CheckKeysCtrl();
+            return;
+        }
+
         foreach (var key in pressed) {
             if(key == (Keys)game.client.preferences.getPref(GLOB.PREF_KEY_MOVE_RIGHT)) 
                 moveX++;
@@ -113,5 +119,15 @@ public class Subsystem_Input : Subsystem {
             return;
 
         controlled.Move(controlled, GLOB.get_dir(moveX, moveY), controlled.GetSpeed() * game.lastGameTime.ElapsedGameTime.TotalSeconds);
+    }
+
+    protected void CheckKeysCtrl() {
+        Atom controlled = game.client.getControlled();
+        var pressed = Keyboard.GetState().GetPressedKeys();
+        Viewer viewer = game.client.getViewer();
+        foreach (var key in pressed) {
+            if (key == Keys.S && !keyboardState.IsKeyDown(key) && game.client.cur_screen is Screen_Map)
+                GLOB.GameWorld.Save();
+        }
     }
 }

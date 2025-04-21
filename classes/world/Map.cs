@@ -17,7 +17,7 @@ public class Map {
         return null;
     }
 
-    virtual public Atom getSpawn() {
+    virtual public Atom GetSpawn() {
         return null;
     }
 
@@ -53,5 +53,9 @@ public class Map {
 
     public virtual double Dist(Atom A1, Atom A2) {
         return noWay;
+    }
+
+    public virtual string Encode() {
+        return "";
     }
 }

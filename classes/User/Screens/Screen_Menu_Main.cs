@@ -29,9 +29,9 @@ public class ButtonTexted : Image {
     {
         base.Draw(gameTime, spriteBatch, client, x, y, mult);
         spriteBatch.DrawString(Game1.arial, imageText, new Vector2(
-            (int) (x + (W * mult - Game1.arial.MeasureString(imageText).X * mult) / 2), 
-            (int) (y + (H * mult - Game1.arial.MeasureString(imageText).Y * mult) / 2)), 
-            Color.Black, 0, new Vector2(0, 0), (float) mult, SpriteEffects.None, GLOB.DEPTH_TOP);
+            (int) (x + (W * mult - Game1.arial.MeasureString(imageText).X * mult / 2) / 2), 
+            (int) (y + (H * mult - Game1.arial.MeasureString(imageText).Y * mult / 2) / 2)), 
+            Color.Black, 0, new Vector2(0, 0), (float) mult / 2, SpriteEffects.None, GLOB.DEPTH_TOP);
     }
 }
 
@@ -50,6 +50,8 @@ public class ButtonNewGame : ButtonTexted {
     protected override string imageText => "New Game";
     
     public override void OnClick(Client clicker) {
+        GLOB.GameWorld = new();
+        GLOB.GameWorld.AddMap(new Map_Normal(10, 10, true, typeof(Turf_Grass)), IDGiver.get());
         clicker.SetScreen(new Screen_Map(clicker));
     }
 }
