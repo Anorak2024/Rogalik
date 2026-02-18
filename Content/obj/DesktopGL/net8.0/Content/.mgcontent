@@ -4,15 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Code/MyGame/Rogalik/Content/fonts/Arial.spritefont</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/buttons/Button 1.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/buttons/Throw.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/items/Stone.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/mobs/Human.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/other/Error.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/other/Inventory_slot_selected.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/other/Inventory_slot.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/turfs/Grass 1.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/fonts/Arial.spritefont</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/buttons/Button 1.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/buttons/Throw.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/items/Stone.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/mobs/Human.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Error.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Inventory_slot_selected.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Inventory_slot.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/turfs/Grass 1.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

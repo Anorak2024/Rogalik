@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/mobs/Human.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/other/Error.png</File>
-    <File>C:/Code/MyGame/Rogalik/Content/sprites/turfs/Grass 1.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/mobs/Human.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Error.png</File>
+    <File>C:/Code/Other_projects/2D/Rogalik/Content/sprites/turfs/Grass 1.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

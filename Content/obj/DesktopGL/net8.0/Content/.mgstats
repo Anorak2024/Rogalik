@@ -1,1 +1,10 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Code/Other_projects/2D/Rogalik/Content/fonts/Arial.spritefont","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/fonts/Arial.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21529,0,3456025
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/buttons/Button 1.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/buttons/Button 1.xnb","TextureProcessor","Texture2DContent",366,16469,0,0209903
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/buttons/Throw.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/buttons/Throw.xnb","TextureProcessor","Texture2DContent",386,4181,0,0051403
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/items/Stone.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/items/Stone.xnb","TextureProcessor","Texture2DContent",214,1109,0,0052433
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/mobs/Human.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/mobs/Human.xnb","TextureProcessor","Texture2DContent",392,4181,0,0037597
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Error.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/other/Error.xnb","TextureProcessor","Texture2DContent",520,4181,0,0039161
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Inventory_slot_selected.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/other/Inventory_slot_selected.xnb","TextureProcessor","Texture2DContent",372,16469,0,0141911
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Inventory_slot.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/other/Inventory_slot.xnb","TextureProcessor","Texture2DContent",366,16469,0,0063175
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/turfs/Grass 1.png","C:/Code/Other_projects/2D/Rogalik/Content/bin/DesktopGL/Content/sprites/turfs/Grass 1.xnb","TextureProcessor","Texture2DContent",384,4181,0,0075089

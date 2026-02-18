@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Code\\MyGame\\Rogalik\\Rogalik.csproj": {}
+    "C:\\Code\\Other_projects\\2D\\Rogalik\\Rogalik.csproj": {}
   },
   "projects": {
-    "C:\\Code\\MyGame\\Rogalik\\Rogalik.csproj": {
+    "C:\\Code\\Other_projects\\2D\\Rogalik\\Rogalik.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Code\\MyGame\\Rogalik\\Rogalik.csproj",
+        "projectUniqueName": "C:\\Code\\Other_projects\\2D\\Rogalik\\Rogalik.csproj",
         "projectName": "Rogalik",
-        "projectPath": "C:\\Code\\MyGame\\Rogalik\\Rogalik.csproj",
+        "projectPath": "C:\\Code\\Other_projects\\2D\\Rogalik\\Rogalik.csproj",
         "packagesPath": "C:\\Users\\РС\\.nuget\\packages\\",
-        "outputPath": "C:\\Code\\MyGame\\Rogalik\\obj\\",
+        "outputPath": "C:\\Code\\Other_projects\\2D\\Rogalik\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\РС\\AppData\\Roaming\\NuGet\\NuGet.Config"

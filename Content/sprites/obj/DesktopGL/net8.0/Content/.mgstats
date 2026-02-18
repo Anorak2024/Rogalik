@@ -1,1 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/mobs/Human.png","C:/Code/Other_projects/2D/Rogalik/Content/sprites/bin/DesktopGL/Content/mobs/Human.xnb","TextureProcessor","Texture2DContent",392,4181,0,1779045
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/other/Error.png","C:/Code/Other_projects/2D/Rogalik/Content/sprites/bin/DesktopGL/Content/other/Error.xnb","TextureProcessor","Texture2DContent",520,4181,0,0046423
+"C:/Code/Other_projects/2D/Rogalik/Content/sprites/turfs/Grass 1.png","C:/Code/Other_projects/2D/Rogalik/Content/sprites/bin/DesktopGL/Content/turfs/Grass 1.xnb","TextureProcessor","Texture2DContent",384,4181,0,003667

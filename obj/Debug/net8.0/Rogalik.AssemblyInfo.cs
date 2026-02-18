@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rogalik")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cdf3c60c118b6ff4043958a3e2a5a81dfba3c91d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d97fc92c5dbd7f7f92367d5958b68ff330a2796f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rogalik")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rogalik")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
